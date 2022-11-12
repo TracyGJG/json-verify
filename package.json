@@ -1,0 +1,30 @@
+{
+  "name": "json-verify",
+  "version": "1.0.0",
+  "description": "JSON string verifier",
+  "main": "json-verify.js",
+  "scripts": {
+    "min": "jsmin -o json-verify.min.js json-verify.js",
+    "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TracyGJG/json-verify.git"
+  },
+  "author": "Tracy-Gregory Gilmore",
+  "license": "CC-BY-1.0",
+  "bugs": {
+    "url": "https://github.com/TracyGJG/json-verify/issues"
+  },
+  "homepage": "https://github.com/TracyGJG/json-verify#readme",
+  "dependencies": {
+    "jsmin": "^1.0.1"
+  },
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
+}
