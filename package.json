@@ -10,21 +10,21 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "type": "module",
-  "keywords": [],
+  "keywords": [
+    "JSON"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TracyGJG/json-verify.git"
   },
   "author": "Tracy-Gregory Gilmore",
-  "license": "CC-BY-1.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/TracyGJG/json-verify/issues"
   },
   "homepage": "https://github.com/TracyGJG/json-verify#readme",
-  "dependencies": {
-    "jsmin": "^1.0.1"
-  },
   "devDependencies": {
-    "jest": "^28.1.3"
+    "jest": "^28.1.3",
+    "jsmin": "^1.0.1"
   }
 }
