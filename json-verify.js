@@ -69,6 +69,8 @@ function verify(input, indentType = '\t') {
 }
 
 function processToken(stack, token, value, _report) {
+	const STACK_IS_EMPTY = !stack.length;
+	let tokenError = '';
 	const fallbackTokenReport = datum => report(datum, false, false, 0);
 	const openTokenReport = datum => report(datum, false, true, 1);
 	const closeTokenReport = datum => report(datum, true, false, -1);
@@ -80,11 +82,30 @@ function processToken(stack, token, value, _report) {
 		SeparatingComma: datum => report(datum, false, true, 0),
 		PropertyColon: datum => report(`${datum} `, false, false, 0),
 	};
-	return (tokenReports[token] || fallbackTokenReport)(value);
 
-	// function isPrimitive(_token) {
-	// 	return ['Null', 'Boolean', 'Number', 'String'].includes(_token);
-	// }
+	/* Verify JSON Token
+	TOKEN		VERIFICATION			ACTION					tokenError
+
+	Null		STACK_IS_EMPTY | ARRAY (0/2) | OBJECT 2			-> 'Unexpected Null encountered'		
+	Boolean		STACK_IS_EMPTY | ARRAY (0/2) | OBJECT 2			-> 'Unexpected Boolean encountered'		
+	Number		STACK_IS_EMPTY | ARRAY (0/2) | OBJECT 2			-> 'Unexpected Number encountered'		
+	String		STACK_IS_EMPTY | ARRAY (0/2) | OBJECT (0/2)		-> 'Unexpected String encountered'
+	[			STACK_IS_EMPTY | ARRAY (0/2) | OBJECT 2
+										=> UNSHIFT ARRAY 0		-> "Unexpected start of Array"
+	]			ARRAY (0/1)				=> SHIFT				-> "Unexpected end of Array"
+	:			OBJECT 1				=> INC					-> "Unexpected colon encountered"
+	,			ARRAY 1 | OBJECT 3		=> INC					-> "Unexpected comma encountered"
+	{			STACK_IS_EMPTY | ARRAY (0/2) | OBJECT 2
+										=> UNSHIFT OBJECT 0		-> "Unexpected start of object"
+	}			OBJECT (0|3)			=> SHIFT				-> "Unexpected end of object"
+
+*/
+
+	return tokenError || (tokenReports[token] || fallbackTokenReport)(value);
+
+	function isPrimitive(_token) {
+		return ['Null', 'Boolean', 'Number', 'String'].includes(_token);
+	}
 
 	function report(datum, preNewline, postNewline, indentDelta) {
 		preNewline && newLine(indentDelta);
@@ -110,4 +131,4 @@ const testData = [
 	' null true false, -42, 0.123  []42e-1 42E+2 "Hello World" "unrecognisedTokenHere {} ',
 	' { "a" : [ "b" , "c" ] , "d" : { "e" : "f" } } ',
 ];
-console.log(verify(testData[2]));
+console.log(verify(testData[2], 2));
