@@ -1,0 +1,14 @@
+[
+    {
+        "description": "Empty",
+        "input": {
+            "jsonString": " [] ",
+            "indentParam": 2
+        },
+        "output": {
+            "report": "[\n\n]",
+            "remainder": "",
+            "error": null
+        }
+    }
+]

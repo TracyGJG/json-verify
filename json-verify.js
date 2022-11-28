@@ -13,7 +13,7 @@ const RegExpPatterns = {
 
 function parser(pattern, type) {
 	const regExpObject = new RegExp(
-		`^\\s*(?<value>${pattern})\\s*(?<remainder>.*)$`
+		`^(?<value>${pattern})\\s*(?<remainder>.*)$`
 	);
 
 	return function (input) {
@@ -34,7 +34,7 @@ const parsers = Object.entries(RegExpPatterns).reduce(
 function parseAll(data) {
 	return (
 		Object.values(parsers).find(parser => parser(data).type) ||
-		(() => ({ value: data, type: 'Error' }))
+		(() => ({ remainder: data, type: 'Error' }))
 	)(data);
 }
 
@@ -50,25 +50,25 @@ function verify(input, indentType = '\t') {
 			: indentType,
 	};
 
-	// console.log(
-	// 	'TYPE'.padEnd(18, ' '),
-	// 	'VALUE'.padEnd(20, ' '),
-	// 	'DATA remaining',
-	// 	`\n${'-'.repeat(60)}`
-	// );
 	while (data?.length && !tokenError) {
 		const { type, value, remainder } = parseAll(data);
 		data = remainder;
 		tokenError =
 			type === 'Error'
-				? value
+				? 'Unrecognised content'
 				: processToken(tokenStack, type, value, report);
-		// console.log(type.padEnd(18, ' '), value.padEnd(20, ' '), data);
+		if (!tokenError && data?.length && !tokenStack.length) {
+			tokenError = 'Unrecognised content';
+		}
 	}
 	if (!tokenError && (data?.length || tokenStack.length)) {
-		tokenError = 'Unexpected end of source data';
+		tokenError = 'Unexpected end of JSON';
 	}
-	return [...report.json, tokenError].join('\n');
+	return {
+		error: tokenError || null,
+		remainder: data,
+		report: report.json.join('\n'),
+	};
 }
 
 function processToken(stack, token, value, _report) {
@@ -77,7 +77,8 @@ function processToken(stack, token, value, _report) {
 		ARRAY: 'ARRAY',
 		OBJECT: 'OBJECT',
 	};
-	const isStep = (...steps) => !steps.length || steps.includes(stack[0].step);
+	const isStep = (...steps) =>
+		!steps.length || (stack.length && steps.includes(stack[0].step));
 	const isARRAY = (...steps) =>
 		isStep(...steps) && stack.length && stack[0].type === STACK_TYPE.ARRAY;
 	const isOBJECT = (...steps) =>
@@ -152,15 +153,8 @@ function processToken(stack, token, value, _report) {
 			isVerified ? (stack.shift(), '') : 'Unexpected Object end',
 	};
 
-	// console.log(
-	// 	`\n${stack.length}: ${
-	// 		stack.length ? JSON.stringify(stack[0]) : 'STACK EMPTY'
-	// 	}`
-	// );
 	const verificationResult = tokenVerifiers[token]();
-	// console.log('>', token, verificationResult);
 	tokenError = tokenErrors[token](verificationResult);
-	// console.log(stack.length ? JSON.stringify(stack[0]) : 'STACK EMPTY');
 
 	return tokenError || (tokenReports[token] || fallbackTokenReport)(value);
 
@@ -181,19 +175,4 @@ function processToken(stack, token, value, _report) {
 	}
 }
 
-// export default verify;
-
-const testData = [
-	' { "a" : [ false , true ] , "b" : { "c" : 42, "d" : "Hello World" }, "e": null } ',
-	' { "a" : [ false , true ] , "b" : { "c" : 42, "d" : "Hello World" }, "e": null } ',
-	' { "a" : [ false , true ] , "b" : { "c" : 42, "d" : "Hello World" }, "e": null  ',
-	' { "a" : [ "b" , "c" ] , "d" : { "e" : "f" } } ',
-	'{ "a": null, "_": {"b": true, "c": false }, "d": 42, "e": "Hello World" }',
-	'{ "a": null, "b": true, "c": false, "d": 42, "e": "Hello World" }',
-	'[ null, [ true, false], 42, "Hello World" ]',
-	'[ null, true, false, 42, "Hello World" ]',
-	' null true false, -42, 0.123  []42e-1 42E+2 "Hello World" "unrecognisedTokenHere {} ',
-	' null true false, -42: 0.123    []42e-1 42E+2 "Hello World" {} ',
-];
-
-console.log(verify(testData[0], 2));
+export default verify;

@@ -30,6 +30,11 @@ The optional second argument is either a string of number.
 Given a string, it will be used as the indent to present the JSON output in a readable structure. 
 If a number is supplied, that number of spaces will be used as the indent string 
 
+In response the function returns an object containing the following properties:
+* error: a string containing an error message should an issue have been detected, empty string if it passes
+* report: a string containing the initial section of the JSON data that conforms with the specifciation, up to the point a fault was detected
+* remainder: a string containing the section of the JSON data from the point of failure to the end of the JSON data 
+
 The 'verify' function could be regarded as a candidate function of the JSON namespace.
 
 

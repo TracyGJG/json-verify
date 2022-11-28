@@ -1,0 +1,122 @@
+[
+    {
+        "description": "Error empty",
+        "input": {
+            "jsonString": "  ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "",
+            "remainder": "  ",
+            "error": "Unrecognised content"
+        }
+    },
+    {
+        "description": "value null",
+        "input": {
+            "jsonString": " null ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "null",
+            "remainder": "",
+            "error": null
+        }
+    },
+    {
+        "description": "Boolean false",
+        "input": {
+            "jsonString": " false ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "false",
+            "remainder": "",
+            "error": null
+        }
+    },
+    {
+        "description": "Boolean true",
+        "input": {
+            "jsonString": " true ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "true",
+            "remainder": "",
+            "error": null
+        }
+    },
+    {
+        "description": "Number negative integer",
+        "input": {
+            "jsonString": " -42 ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "-42",
+            "remainder": "",
+            "error": null
+        }
+    },
+    {
+        "description": "Number positive float",
+        "input": {
+            "jsonString": " 0.42 ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "0.42",
+            "remainder": "",
+            "error": null
+        }
+    },
+    {
+        "description": "Number positive exponential",
+        "input": {
+            "jsonString": " 42E2 ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "42E2",
+            "remainder": "",
+            "error": null
+        }
+    },
+    {
+        "description": "Number negative exponential",
+        "input": {
+            "jsonString": " 42e-2 ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "42e-2",
+            "remainder": "",
+            "error": null
+        }
+    },
+    {
+        "description": "Error single",
+        "input": {
+            "jsonString": " xxxx ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "",
+            "remainder": " xxxx ",
+            "error": "Unrecognised content"
+        }
+    },
+    {
+        "description": "Error double",
+        "input": {
+            "jsonString": " true, ",
+            "indentParam": null
+        },
+        "output": {
+            "report": "true",
+            "remainder": ",",
+            "error": "Unrecognised content"
+        }
+    }
+]
