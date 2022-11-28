@@ -25,6 +25,7 @@ The purpose of 'verify' is to:
 * If invalid, provide a consistent error reporting approach, independent of the browser.
 
 The first argument is mandatory and should contain a text string that is a candidate JS object to be confirmed as well formed JSON.
+
 The optional second argument is either a string of number.
 Given a string, it will be used as the indent to present the JSON output in a readable structure. 
 If a number is supplied, that number of spaces will be used as the indent string 
