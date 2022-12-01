@@ -18,8 +18,14 @@ const tokenTestCases = [
 	'} and the rest',
 	': and the rest',
 ];
-console.table(tokenTestCases.map(testCase => jsonTokenize(testCase)));
+// console.table(tokenTestCases.map(testCase => jsonTokenize(testCase)));
 
-const jsonTestCase = ' null false true 42 -4.2 42e-2 42E+2 "Forty Two" ';
+const jsonTestCases = [
+	' null false true 42 -4.2 42e-2 42E+2 "Forty Two" ',
+	' null false true 42 -4.2 42e-2 42E+2 "Forty Two" xxx ',
+	' null false true 42 yyy-4.2 42e-2 42E+2 "Forty Two" ',
+];
 
-console.table(jsonVerify(jsonTestCase, '  '));
+jsonTestCases.forEach(jsonTestCase =>
+	console.log(jsonVerify(jsonTestCase, '  ').report)
+);

@@ -21,28 +21,28 @@ const jsonRegExpObject = new RegExp(jsonRegExpString);
 
 export function jsonTokenize(jsonString) {
 	const tokenMatches = jsonString.match(jsonRegExpObject)?.groups || {
-		Error: jsonString,
-		remainder: '',
+		Error: 'Unrecognised content encountered',
+		remainder: jsonString,
 	};
 	const extractTokens = (obj, [key, val]) =>
 		key === 'remainder'
 			? { ...obj, [key]: val }
-			: val?.length
+			: val?.length // key other than remainder but value has length
 			? { ...obj, type: key, value: val }
 			: obj;
 	return Object.entries(tokenMatches).reduce(extractTokens, {});
 }
 
 function jsonVerify(sourceData, indentText = '\t') {
-	let jsonData = sourceData.trim();
-	const report = [];
+	const retValue = { report: [], error: '', remainder: sourceData.trim() };
 
-	while (jsonData.length) {
-		const result = jsonTokenize(jsonData);
-		report.push(result);
-		jsonData = result.remainder.trim();
+	while (retValue.remainder.length && !retValue.error) {
+		const result = jsonTokenize(retValue.remainder);
+		retValue.report += `${result.type} = ${result.value}\n`;
+		retValue.error = result.type === 'Error' ? result.value : '';
+		retValue.remainder = result.remainder.trim();
 	}
-	return report;
+	return retValue;
 }
 
 export default jsonVerify;
