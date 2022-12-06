@@ -1,0 +1,146 @@
+[
+    {
+        "description": "Error",
+        "input": " Error ",
+        "output": {
+            "token": "Error",
+            "value": "Unrecognised content encountered"
+        }
+    },
+    {
+        "description": "Null",
+        "input": " null ",
+        "output": {
+            "token": "Null",
+            "value": "null"
+        }
+    },
+    {
+        "description": "Boolean false",
+        "input": " false ",
+        "output": {
+            "token": "Boolean",
+            "value": "false"
+        }
+    },
+    {
+        "description": "Boolean true",
+        "input": " true ",
+        "output": {
+            "token": "Boolean",
+            "value": "true"
+        }
+    },
+    {
+        "description": "Number positive integer",
+        "input": " 42 ",
+        "output": {
+            "token": "Number",
+            "value": "42"
+        }
+    },
+    {
+        "description": "Number negative floating-point",
+        "input": " -0.42 ",
+        "output": {
+            "token": "Number",
+            "value": "-0.42"
+        }
+    },
+    {
+        "description": "Number positive exponential",
+        "input": " 42e+2 ",
+        "output": {
+            "token": "Number",
+            "value": "42e+2"
+        }
+    },
+    {
+        "description": "Number negative exponential",
+        "input": " 42E-2 ",
+        "output": {
+            "token": "Number",
+            "value": "42E-2"
+        }
+    },
+    {
+        "description": "String - regular characters",
+        "input": " \"Forty Two\" ",
+        "output": {
+            "token": "String",
+            "value": "\"Forty Two\""
+        }
+    },
+    {
+        "description": "String - unicode character",
+        "input": " \"\\u0065\" ",
+        "output": {
+            "token": "String",
+            "value": "\"\\u0065\""
+        }
+    },
+    {
+        "description": "String - escape characters",
+        "input": " \" \\\" \\\/ \\\\ \" ",
+        "output": {
+            "token": "String",
+            "value": "\" \\\" \\\/ \\\\ \""
+        }
+    },
+    {
+        "description": "String - special characters",
+        "input": " \" \\b \\f \\n \\r \\t \" ",
+        "output": {
+            "token": "String",
+            "value": "\" \\b \\f \\n \\r \\t \""
+        }
+    },
+    {
+        "description": "Array opening",
+        "input": " [ ",
+        "output": {
+            "token": "Array opening",
+            "value": "["
+        }
+    },
+    {
+        "description": "Array closure",
+        "input": " ] ",
+        "output": {
+            "token": "Array closure",
+            "value": "]"
+        }
+    },
+    {
+        "description": "Comma",
+        "input": " , ",
+        "output": {
+            "token": "Comma",
+            "value": ","
+        }
+    },
+    {
+        "description": "Colon",
+        "input": " : ",
+        "output": {
+            "token": "Colon",
+            "value": ":"
+        }
+    },
+    {
+        "description": "Object opening",
+        "input": " { ",
+        "output": {
+            "token": "Object opening",
+            "value": "{"
+        }
+    },
+    {
+        "description": "Object closure",
+        "input": " } ",
+        "output": {
+            "token": "Object closure",
+            "value": "}"
+        }
+    }
+]

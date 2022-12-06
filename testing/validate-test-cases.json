@@ -1,0 +1,763 @@
+[
+    {
+        "description": "Error",
+        "input": {
+            "tokenValue": {
+                "token": "Error"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": "An error has occured"
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": "An error has occured"
+            }
+        }
+    },
+    {
+        "description": "TOP_LEVEL String",
+        "input": {
+            "tokenValue": {
+                "token": "String"
+            },
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "TOP_LEVEL Array open",
+        "input": {
+            "tokenValue": {
+                "token": "Array_open"
+            },
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "TOP_LEVEL Array close",
+        "input": {
+            "tokenValue": {
+                "token": "Array_close"
+            },
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Array close encountered"
+            }
+        }
+    },
+    {
+        "description": "ARRAY_0 Number",
+        "input": {
+            "tokenValue": {
+                "token": "Number"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "ARRAY_0 Array Open",
+        "input": {
+            "tokenValue": {
+                "token": "Array_open"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                },
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "ARRAY_0 Array Close",
+        "input": {
+            "tokenValue": {
+                "token": "Array_close"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "ARRAY_0 Array Comma",
+        "input": {
+            "tokenValue": {
+                "token": "Comma"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Comma encountered"
+            }
+        }
+    },
+    {
+        "description": "ARRAY_1 Array Close",
+        "input": {
+            "tokenValue": {
+                "token": "Array_close"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "ARRAY_1 Comma",
+        "input": {
+            "tokenValue": {
+                "token": "Comma"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "ARRAY_1 Object Close",
+        "input": {
+            "tokenValue": {
+                "token": "Object_close"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Object close encountered"
+            }
+        }
+    },
+    {
+        "description": "ARRAY_1 String",
+        "input": {
+            "tokenValue": {
+                "token": "String"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected String encountered"
+            }
+        }
+    },
+    {
+        "description": "ARRAY_2 Object Open",
+        "input": {
+            "tokenValue": {
+                "token": "Object_open"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0
+                },
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "ARRAY_2 String",
+        "input": {
+            "tokenValue": {
+                "token": "String"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_0 Object close",
+        "input": {
+            "tokenValue": {
+                "token": "Object_close"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_0 String",
+        "input": {
+            "tokenValue": {
+                "token": "String"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_0 Number",
+        "input": {
+            "tokenValue": {
+                "token": "Number"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Number encountered"
+            }
+        }
+    },
+    {
+        "description": "OBJECT_1 Colon",
+        "input": {
+            "tokenValue": {
+                "token": "Colon"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_1 Boolean",
+        "input": {
+            "tokenValue": {
+                "token": "Boolean"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Boolean encountered"
+            }
+        }
+    },
+    {
+        "description": "OBJECT_2 Boolean",
+        "input": {
+            "tokenValue": {
+                "token": "Boolean"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 3
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_2 Array open",
+        "input": {
+            "tokenValue": {
+                "token": "Array_open"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                },
+                {
+                    "context": "OBJECT",
+                    "step": 3
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_2 Array close",
+        "input": {
+            "tokenValue": {
+                "token": "Array_close"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Array close encountered"
+            }
+        }
+    },
+    {
+        "description": "OBJECT_2 Colon",
+        "input": {
+            "tokenValue": {
+                "token": "Colon"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 2
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Colon encountered"
+            }
+        }
+    },
+    {
+        "description": "OBJECT_3 Comma",
+        "input": {
+            "tokenValue": {
+                "token": "Comma"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 3
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 4
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_3 Object close",
+        "input": {
+            "tokenValue": {
+                "token": "Object_close"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 3
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_3 Object open",
+        "input": {
+            "tokenValue": {
+                "token": "Object_open"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 3
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 3
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Object open encountered"
+            }
+        }
+    },
+    {
+        "description": "OBJECT_4 String",
+        "input": {
+            "tokenValue": {
+                "token": "String"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 4
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_4 Object open",
+        "input": {
+            "tokenValue": {
+                "token": "Object_open"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 4
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 4
+                }
+            ],
+            "state": {
+                "error": "Error",
+                "value": "Unexpected Object open encountered"
+            }
+        }
+    }
+]

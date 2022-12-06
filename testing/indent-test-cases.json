@@ -1,0 +1,26 @@
+[
+    {
+        "description": "Default",
+        "output": "\t\t"
+    },
+    {
+        "description": "String",
+        "input": "____",
+        "output": "________"
+    },
+    {
+        "description": "Number - positive",
+        "input": 4,
+        "output": "        "
+    },
+    {
+        "description": "Number - zero",
+        "input": 0,
+        "output": ""
+    },
+    {
+        "description": "Number - negative",
+        "input": -4,
+        "output": "\t\t"
+    }
+]

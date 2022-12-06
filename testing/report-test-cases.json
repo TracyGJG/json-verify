@@ -1,0 +1,206 @@
+[
+    {
+        "description": "Error",
+        "input": {
+            "tokenValue": {
+                "token": "Error",
+                "value": "An error has occured"
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 0
+                }
+            ],
+            "state": {
+                "report": "",
+                "error": "An error has occured",
+                "remainder": ""
+            }
+        },
+        "output": {
+            "report": "",
+            "error": "An error has occured"
+        }
+    },
+    {
+        "description": "Top Level String (no remainder)",
+        "input": {
+            "tokenValue": {
+                "token": "String",
+                "value": "\"Forty-Two\""
+            },
+            "tokenStack": [],
+            "state": {
+                "report": "",
+                "error": "",
+                "remainder": ""
+            }
+        },
+        "output": {
+            "report": "\"Forty-Two\"",
+            "error": ""
+        }
+    },
+    {
+        "description": "Top Level String (with remainder)",
+        "input": {
+            "tokenValue": {
+                "token": "String",
+                "value": "\"Forty-Two\""
+            },
+            "tokenStack": [],
+            "state": {
+                "report": "",
+                "error": "",
+                "remainder": "\"Remaining text\""
+            }
+        },
+        "output": {
+            "report": "\"Forty-Two\"",
+            "error": "Data remaining after complete JSON block."
+        }
+    },
+    {
+        "description": "Array Value (no remainder)",
+        "input": {
+            "tokenValue": {
+                "token": "String",
+                "value": "\"Forty-Two\""
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "report": "[",
+                "error": "",
+                "remainder": ""
+            }
+        },
+        "output": {
+            "report": "[\n  \"Forty-Two\"",
+            "error": "Incomplete JSON block."
+        }
+    },
+    {
+        "description": "Array and Object Value (no remainder)",
+        "input": {
+            "tokenValue": {
+                "token": "Object_open",
+                "value": "{"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0
+                },
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "report": "[",
+                "error": "",
+                "remainder": ""
+            }
+        },
+        "output": {
+            "report": "[{",
+            "error": "Incomplete JSON blocks."
+        }
+    },
+    {
+        "description": "Array Value String (with remainder)",
+        "input": {
+            "tokenValue": {
+                "token": "String",
+                "value": "\"Forty-Two\""
+            },
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "report": "[",
+                "error": "",
+                "remainder": "]"
+            }
+        },
+        "output": {
+            "report": "[\n  \"Forty-Two\"",
+            "error": ""
+        }
+    },
+    {
+        "description": "Array - Empty",
+        "input": {
+            "tokenValue": {
+                "token": "Array_close",
+                "value": "]"
+            },
+            "tokenStack": [],
+            "state": {
+                "report": "[",
+                "error": "",
+                "remainder": ""
+            }
+        },
+        "output": {
+            "report": "[]",
+            "error": ""
+        }
+    },
+    {
+        "description": "Complex - valid",
+        "input": {
+            "tokenValue": {
+                "token": "Array_close",
+                "value": "]"
+            },
+            "tokenStack": [],
+            "state": {
+                "report": "[",
+                "error": "",
+                "remainder": ""
+            }
+        },
+        "output": {
+            "report": "[]",
+            "error": ""
+        }
+    },
+    {
+        "description": "Complex - empty object",
+        "input": {
+            "tokenValue": {
+                "token": "Object_close",
+                "value": "}"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0
+                },
+                {
+                    "context": "ARRAY",
+                    "step": 1
+                }
+            ],
+            "state": {
+                "report": "[{",
+                "error": "",
+                "remainder": "]"
+            }
+        },
+        "output": {
+            "report": "[{  }",
+            "error": ""
+        }
+    }
+]
