@@ -89,7 +89,7 @@
         "description": "Array and Object Value (no remainder)",
         "input": {
             "tokenValue": {
-                "token": "Object_open",
+                "token": "Object opening",
                 "value": "{"
             },
             "tokenStack": [
@@ -141,7 +141,7 @@
         "description": "Array - Empty",
         "input": {
             "tokenValue": {
-                "token": "Array_close",
+                "token": "Array closure",
                 "value": "]"
             },
             "tokenStack": [],
@@ -160,7 +160,7 @@
         "description": "Complex - valid",
         "input": {
             "tokenValue": {
-                "token": "Array_close",
+                "token": "Array closure",
                 "value": "]"
             },
             "tokenStack": [],
@@ -179,13 +179,13 @@
         "description": "Complex - empty object",
         "input": {
             "tokenValue": {
-                "token": "Object_close",
+                "token": "Object closure",
                 "value": "}"
             },
             "tokenStack": [
                 {
                     "context": "OBJECT",
-                    "step": 0
+                    "step": -1
                 },
                 {
                     "context": "ARRAY",

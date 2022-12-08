@@ -1,0 +1,218 @@
+[
+    {
+        "description": "Simple primitive only",
+        "input": [
+            " true ",
+            "  "
+        ],
+        "output": {
+            "report": "true",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Simple primitive with remainder",
+        "input": [
+            " true false ",
+            "  "
+        ],
+        "output": {
+            "report": "true",
+            "remainder": "false",
+            "error": "Data remaining after complete JSON block."
+        }
+    },
+    {
+        "description": "Array incomplete",
+        "input": [
+            " [ ",
+            "  "
+        ],
+        "output": {
+            "report": "[",
+            "remainder": "",
+            "error": "Incomplete JSON block."
+        }
+    },
+    {
+        "description": "Array invalid close",
+        "input": [
+            " ] ",
+            "  "
+        ],
+        "output": {
+            "report": "",
+            "error": "Unexpected Array closure encountered",
+            "remainder": ""
+        }
+    },
+    {
+        "description": "Array complete - empty",
+        "input": [
+            " [] ",
+            "  "
+        ],
+        "output": {
+            "report": "[  ]",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Array complete with primitive",
+        "input": [
+            " [42] ",
+            "  "
+        ],
+        "output": {
+            "report": "[\n  42\n]",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Array with invalid object closure",
+        "input": [
+            " [} ",
+            "  "
+        ],
+        "output": {
+            "report": "[",
+            "remainder": "",
+            "error": "Unexpected Object closure encountered"
+        }
+    },
+    {
+        "description": "Object incomplete",
+        "input": [
+            " { ",
+            "  "
+        ],
+        "output": {
+            "report": "{",
+            "remainder": "",
+            "error": "Incomplete JSON block."
+        }
+    },
+    {
+        "description": "Object invalid closure",
+        "input": [
+            " } ",
+            "  "
+        ],
+        "output": {
+            "report": "",
+            "remainder": "",
+            "error": "Unexpected Object closure encountered"
+        }
+    },
+    {
+        "description": "Object empty",
+        "input": [
+            " {} ",
+            "  "
+        ],
+        "output": {
+            "report": "{  }",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Empty Object in Array",
+        "input": [
+            " [{}] ",
+            "  "
+        ],
+        "output": {
+            "report": "[{  }\n]",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Populated Object in Array",
+        "input": [
+            " [{\"test\":null}] ",
+            "  "
+        ],
+        "output": {
+            "report": "[{\n    \"test\":  null\n  }\n]",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Empty Array in Array",
+        "input": [
+            " [[]] ",
+            "  "
+        ],
+        "output": {
+            "report": "[[  ]\n]",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Populated Array in Array",
+        "input": [
+            " [[42]] ",
+            "  "
+        ],
+        "output": {
+            "report": "[[\n    42\n  ]\n]",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Empty Array in Object",
+        "input": [
+            " {\"test\":[]} ",
+            "  "
+        ],
+        "output": {
+            "report": "{\n  \"test\":  [  ]\n}",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Populated Array in Object",
+        "input": [
+            " {\"test\":[null]} ",
+            "  "
+        ],
+        "output": {
+            "report": "{\n  \"test\":  [\n    null\n  ]\n}",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Empty Object in Object",
+        "input": [
+            " {\"test\": {}} ",
+            "  "
+        ],
+        "output": {
+            "report": "{\n  \"test\":  {  }\n}",
+            "remainder": "",
+            "error": ""
+        }
+    },
+    {
+        "description": "Nested Populated Object in Object",
+        "input": [
+            " {\"test\": {  \"value\":  42  }} ",
+            "  "
+        ],
+        "output": {
+            "report": "{\n  \"test\":  {\n    \"value\":  42\n  }\n}",
+            "remainder": "",
+            "error": ""
+        }
+    }
+]

@@ -30,7 +30,6 @@ function createJsonTokeniser(jsonTokenPatterns) {
 			remainder: jsonString,
 		};
 		const tokenValue = Object.entries(tokenMatches).reduce(extractTokens, {});
-		console.log('tokenized', { tokenValue });
 		jsonString.remainder = tokenMatches.remainder;
 		return tokenValue;
 	};
@@ -59,40 +58,40 @@ export const jsonTokenizer = createJsonTokeniser({
 //#endregion
 
 //#region validateToken
-const OPENERS = ['Array_open', 'Object_open'];
-const CLOSURES = ['Array_close', 'Object_close'];
+const OPENERS = ['Array opening', 'Object opening'];
+const CLOSURES = ['Array closure', 'Object closure'];
 const PRIMITIVES = ['Null', 'Boolean', 'Number', 'String'];
+
+const STACK_POPULATED = stack => !!stack.length;
 const NEW_CONTEXT = token =>
-	token === 'Array_open'
+	token === 'Array opening'
 		? { context: 'ARRAY', step: 0 }
 		: { context: 'OBJECT', step: 0, properties: [] };
-const MATCHING_CONTEXT = (token, stack) =>
-	stack.length &&
-	CLOSURES.includes(token) &&
-	(stack[0].context === (token === 'Array_close') ? 'ARRAY' : 'OBJECT');
 const PUSH_STACK = (token, stack) =>
 	OPENERS.includes(token) && stack.unshift(NEW_CONTEXT(token));
 const POP_STACK = (token, stack) =>
-	MATCHING_CONTEXT(token, stack) && stack.shift();
-const UPDATE_STACK = (token, stack) => stack.length && stack[0].step++;
-const RESET_STACK = (token, stack) => stack.length && (stack[0].step = 1);
+	CLOSURES.includes(token) &&
+	STACK_POPULATED(stack) &&
+	(stack[0].step = stack[0].step * -1 - 2);
+const UPDATE_STACK = (token, stack) =>
+	STACK_POPULATED(stack) && stack[0].step++;
+const RESET_STACK = (token, stack) =>
+	STACK_POPULATED(stack) && (stack[0].step = 1);
+const CLOSE_CONTEXT = (token, stack) => {
+	POP_STACK(token, stack);
+	UPDATE_STACK(token, stack);
+	PUSH_STACK(token, stack);
+};
 
 export const tokenValidators = {
 	TOP_LEVEL: { validTokens: [...PRIMITIVES, ...OPENERS], action: PUSH_STACK },
 	ARRAY_0: {
-		validTokens: ['Array_close', ...PRIMITIVES, ...OPENERS],
-		action: (token, stack) => {
-			POP_STACK(token, stack);
-			UPDATE_STACK(token, stack);
-			PUSH_STACK(token, stack);
-		},
+		validTokens: ['Array closure', ...PRIMITIVES, ...OPENERS],
+		action: CLOSE_CONTEXT,
 	},
 	ARRAY_1: {
-		validTokens: ['Array_close', 'Comma'],
-		action: (token, stack) => {
-			UPDATE_STACK(token, stack);
-			POP_STACK(token, stack);
-		},
+		validTokens: ['Array closure', 'Comma'],
+		action: CLOSE_CONTEXT,
 	},
 	ARRAY_2: {
 		validTokens: [...PRIMITIVES, ...OPENERS],
@@ -103,11 +102,8 @@ export const tokenValidators = {
 		},
 	},
 	OBJECT_0: {
-		validTokens: ['Object_close', 'String'],
-		action: (token, stack) => {
-			UPDATE_STACK(token, stack);
-			POP_STACK(token, stack);
-		},
+		validTokens: ['Object closure', 'String'],
+		action: CLOSE_CONTEXT,
 	},
 	OBJECT_1: { validTokens: ['Colon'], action: UPDATE_STACK },
 	OBJECT_2: {
@@ -118,11 +114,8 @@ export const tokenValidators = {
 		},
 	},
 	OBJECT_3: {
-		validTokens: ['Object_close', 'Comma'],
-		action: (token, stack) => {
-			UPDATE_STACK(token, stack);
-			POP_STACK(token, stack);
-		},
+		validTokens: ['Object closure', 'Comma'],
+		action: CLOSE_CONTEXT,
 	},
 	OBJECT_4: { validTokens: ['String'], action: RESET_STACK },
 };
@@ -137,32 +130,37 @@ export function validateToken({ token }, tokenStack, state) {
 	if (tokenValidators[tokenIndex].validTokens.includes(token)) {
 		tokenValidators[tokenIndex].action(token, tokenStack);
 	} else {
-		state.error = 'Error';
-		state.value = `Unexpected ${token.replace('_', ' ')} encountered`;
+		state.error = `Unexpected ${token} encountered`;
 	}
 }
 //#endregion
 
 export function updateReport(tokenValue, tokenStack, jsonState, indent) {
 	if (jsonState.error) return;
-	const TOKEN_STACK_POPULATED = !!tokenStack.length;
 
-	const isComma = tokenValue.token === 'Comma';
-	const isContextStart = TOKEN_STACK_POPULATED && !tokenStack[0].step;
-	const isFirstPrimitive = TOKEN_STACK_POPULATED && tokenStack[0].step === 1;
-	const isContextTerminated = CLOSURES.includes(tokenValue.token);
-	const emptyContext = +(isContextTerminated && isContextStart);
-	const newLine = isFirstPrimitive ? '\n' : '';
-	const indentText = indent(+!!newLine * tokenStack.length + emptyContext);
-	const colonSpace = indent(+isComma);
+	const isColon = tokenValue.token === 'Colon';
+	const colonSpace = indent(+isColon);
 
-	jsonState.report += `${newLine}${indentText}${tokenValue.value}${colonSpace}`;
+	const isEmptyContext = tokenStack[0]?.step === -1;
+	const emptySpace = indent(+isEmptyContext);
 
-	if (!TOKEN_STACK_POPULATED && jsonState.remainder) {
+	const isFirstPrimitive = tokenStack[0]?.step === 1;
+	const isContextTerminated = tokenStack[0]?.step < -1;
+
+	const newLine =
+		isFirstPrimitive || (isContextTerminated && !isEmptyContext) ? '\n' : '';
+	const indentText = indent(
+		+!!newLine * tokenStack.length - +isContextTerminated
+	);
+
+	jsonState.report += `${newLine}${indentText}${emptySpace}${tokenValue.value}${colonSpace}`;
+
+	if (tokenStack[0]?.step < 0) tokenStack.shift();
+	if (!tokenStack.length && jsonState.remainder) {
 		jsonState.error = `Data remaining after complete JSON block.`;
 		return;
 	}
-	if (TOKEN_STACK_POPULATED && !jsonState.remainder) {
+	if (!!tokenStack.length && !jsonState.remainder) {
 		jsonState.error = `Incomplete JSON block${
 			tokenStack.length > 1 ? 's' : ''
 		}.`;

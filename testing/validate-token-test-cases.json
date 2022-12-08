@@ -46,10 +46,10 @@
         }
     },
     {
-        "description": "TOP_LEVEL Array open",
+        "description": "TOP_LEVEL Array opening",
         "input": {
             "tokenValue": {
-                "token": "Array_open"
+                "token": "Array opening"
             },
             "tokenStack": [],
             "state": {
@@ -69,10 +69,10 @@
         }
     },
     {
-        "description": "TOP_LEVEL Array close",
+        "description": "TOP_LEVEL Array closure",
         "input": {
             "tokenValue": {
-                "token": "Array_close"
+                "token": "Array closure"
             },
             "tokenStack": [],
             "state": {
@@ -82,8 +82,7 @@
         "output": {
             "tokenStack": [],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Array close encountered"
+                "error": "Unexpected Array closure encountered"
             }
         }
     },
@@ -116,10 +115,10 @@
         }
     },
     {
-        "description": "ARRAY_0 Array Open",
+        "description": "ARRAY_0 Array opening",
         "input": {
             "tokenValue": {
-                "token": "Array_open"
+                "token": "Array opening"
             },
             "tokenStack": [
                 {
@@ -148,10 +147,10 @@
         }
     },
     {
-        "description": "ARRAY_0 Array Close",
+        "description": "ARRAY_0 Array closure",
         "input": {
             "tokenValue": {
-                "token": "Array_close"
+                "token": "Array closure"
             },
             "tokenStack": [
                 {
@@ -164,7 +163,12 @@
             }
         },
         "output": {
-            "tokenStack": [],
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": -1
+                }
+            ],
             "state": {
                 "error": ""
             }
@@ -194,16 +198,15 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Comma encountered"
+                "error": "Unexpected Comma encountered"
             }
         }
     },
     {
-        "description": "ARRAY_1 Array Close",
+        "description": "ARRAY_1 Array closure",
         "input": {
             "tokenValue": {
-                "token": "Array_close"
+                "token": "Array closure"
             },
             "tokenStack": [
                 {
@@ -216,7 +219,12 @@
             }
         },
         "output": {
-            "tokenStack": [],
+            "tokenStack": [
+                {
+                    "context": "ARRAY",
+                    "step": -2
+                }
+            ],
             "state": {
                 "error": ""
             }
@@ -251,10 +259,10 @@
         }
     },
     {
-        "description": "ARRAY_1 Object Close",
+        "description": "ARRAY_1 Object closure",
         "input": {
             "tokenValue": {
-                "token": "Object_close"
+                "token": "Object closure"
             },
             "tokenStack": [
                 {
@@ -274,8 +282,7 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Object close encountered"
+                "error": "Unexpected Object closure encountered"
             }
         }
     },
@@ -303,16 +310,15 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected String encountered"
+                "error": "Unexpected String encountered"
             }
         }
     },
     {
-        "description": "ARRAY_2 Object Open",
+        "description": "ARRAY_2 Object opening",
         "input": {
             "tokenValue": {
-                "token": "Object_open"
+                "token": "Object opening"
             },
             "tokenStack": [
                 {
@@ -369,10 +375,10 @@
         }
     },
     {
-        "description": "OBJECT_0 Object close",
+        "description": "OBJECT_0 Object closure",
         "input": {
             "tokenValue": {
-                "token": "Object_close"
+                "token": "Object closure"
             },
             "tokenStack": [
                 {
@@ -385,7 +391,12 @@
             }
         },
         "output": {
-            "tokenStack": [],
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": -1
+                }
+            ],
             "state": {
                 "error": ""
             }
@@ -443,8 +454,7 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Number encountered"
+                "error": "Unexpected Number encountered"
             }
         }
     },
@@ -500,8 +510,7 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Boolean encountered"
+                "error": "Unexpected Boolean encountered"
             }
         }
     },
@@ -534,10 +543,10 @@
         }
     },
     {
-        "description": "OBJECT_2 Array open",
+        "description": "OBJECT_2 Array opening",
         "input": {
             "tokenValue": {
-                "token": "Array_open"
+                "token": "Array opening"
             },
             "tokenStack": [
                 {
@@ -566,10 +575,10 @@
         }
     },
     {
-        "description": "OBJECT_2 Array close",
+        "description": "OBJECT_2 Array closure",
         "input": {
             "tokenValue": {
-                "token": "Array_close"
+                "token": "Array closure"
             },
             "tokenStack": [
                 {
@@ -589,8 +598,7 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Array close encountered"
+                "error": "Unexpected Array closure encountered"
             }
         }
     },
@@ -618,8 +626,7 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Colon encountered"
+                "error": "Unexpected Colon encountered"
             }
         }
     },
@@ -652,10 +659,10 @@
         }
     },
     {
-        "description": "OBJECT_3 Object close",
+        "description": "OBJECT_3 Object closure",
         "input": {
             "tokenValue": {
-                "token": "Object_close"
+                "token": "Object closure"
             },
             "tokenStack": [
                 {
@@ -668,17 +675,22 @@
             }
         },
         "output": {
-            "tokenStack": [],
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": -4
+                }
+            ],
             "state": {
                 "error": ""
             }
         }
     },
     {
-        "description": "OBJECT_3 Object open",
+        "description": "OBJECT_3 Object opening",
         "input": {
             "tokenValue": {
-                "token": "Object_open"
+                "token": "Object opening"
             },
             "tokenStack": [
                 {
@@ -698,8 +710,7 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Object open encountered"
+                "error": "Unexpected Object opening encountered"
             }
         }
     },
@@ -732,10 +743,10 @@
         }
     },
     {
-        "description": "OBJECT_4 Object open",
+        "description": "OBJECT_4 Object opening",
         "input": {
             "tokenValue": {
-                "token": "Object_open"
+                "token": "Object opening"
             },
             "tokenStack": [
                 {
@@ -755,8 +766,7 @@
                 }
             ],
             "state": {
-                "error": "Error",
-                "value": "Unexpected Object open encountered"
+                "error": "Unexpected Object opening encountered"
             }
         }
     }
