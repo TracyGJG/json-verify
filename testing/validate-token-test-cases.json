@@ -406,12 +406,14 @@
         "description": "OBJECT_0 String",
         "input": {
             "tokenValue": {
-                "token": "String"
+                "token": "String",
+                "value": "PropertyValue"
             },
             "tokenStack": [
                 {
                     "context": "OBJECT",
-                    "step": 0
+                    "step": 0,
+                    "properties": []
                 }
             ],
             "state": {
@@ -422,11 +424,49 @@
             "tokenStack": [
                 {
                     "context": "OBJECT",
-                    "step": 1
+                    "step": 1,
+                    "properties": [
+                        "PropertyValue"
+                    ]
                 }
             ],
             "state": {
                 "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_0 String",
+        "input": {
+            "tokenValue": {
+                "token": "String",
+                "value": "PropertyValue"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 0,
+                    "properties": [
+                        "PropertyValue"
+                    ]
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 1,
+                    "properties": [
+                        "PropertyValue"
+                    ]
+                }
+            ],
+            "state": {
+                "error": "Duplicate property PropertyValue encountered"
             }
         }
     },
@@ -718,12 +758,14 @@
         "description": "OBJECT_4 String",
         "input": {
             "tokenValue": {
-                "token": "String"
+                "token": "String",
+                "value": "PropertyValue"
             },
             "tokenStack": [
                 {
                     "context": "OBJECT",
-                    "step": 4
+                    "step": 4,
+                    "properties": []
                 }
             ],
             "state": {
@@ -734,11 +776,49 @@
             "tokenStack": [
                 {
                     "context": "OBJECT",
-                    "step": 1
+                    "step": 1,
+                    "properties": [
+                        "PropertyValue"
+                    ]
                 }
             ],
             "state": {
                 "error": ""
+            }
+        }
+    },
+    {
+        "description": "OBJECT_4 String duplicate",
+        "input": {
+            "tokenValue": {
+                "token": "String",
+                "value": "PropertyValue"
+            },
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 4,
+                    "properties": [
+                        "PropertyValue"
+                    ]
+                }
+            ],
+            "state": {
+                "error": ""
+            }
+        },
+        "output": {
+            "tokenStack": [
+                {
+                    "context": "OBJECT",
+                    "step": 1,
+                    "properties": [
+                        "PropertyValue"
+                    ]
+                }
+            ],
+            "state": {
+                "error": "Duplicate property PropertyValue encountered"
             }
         }
     },

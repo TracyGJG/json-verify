@@ -130,8 +130,9 @@ export function validateToken({ token, value }, tokenStack, state) {
 	if (tokenValidators[tokenIndex].validTokens.includes(token)) {
 		if (
 			token === 'String' &&
-			!(tokenStack[0].step % 4) &&
-			tokenStack[0].context === 'OBJECT'
+			tokenStack.length &&
+			tokenStack[0].context === 'OBJECT' &&
+			!(tokenStack[0].step % 4)
 		) {
 			if (tokenStack[0].properties.includes(value)) {
 				state.error = `Duplicate property ${value} encountered`;
