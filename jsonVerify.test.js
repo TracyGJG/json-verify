@@ -75,16 +75,73 @@ describe('JSON verify', () => {
 			}
 		);
 	});
-	describe.only('Complex combination', () => {
-		test('complete', () => {
-			const json = `[
-	"test",
-	null,
-	true,
-	42
-]`;
+	describe('Complex combination', () => {
+		test('Complete simple array', () => {
+			const testJson = ['test', true, 42, null, {}, []];
+			const json = JSON.stringify(testJson);
 			const results = jsonVerify(json);
-			expect(results).toEqual(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Complete simple object', () => {
+			const testJson = {
+				propStr: 'test',
+				propBool: true,
+				propNum: 42,
+				propNull: null,
+				propObj: {},
+				propArr: [],
+			};
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Complete nested array', () => {
+			const testJson = [['test', true, 42, null, {}]];
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Complete nested object', () => {
+			const testJson = {
+				propObj: {
+					propStr: 'test',
+					propBool: true,
+					propNum: 42,
+					propNull: null,
+					propArr: [],
+				},
+			};
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Complete object in  array', () => {
+			const testJson = [
+				{
+					propStr: 'test',
+					propBool: true,
+					propNum: 42,
+					propNull: null,
+					propArr: [],
+				},
+			];
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Complete array in object', () => {
+			const testJson = {
+				propObj: ['test', true, 42, null, {}],
+			};
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
 		});
 	});
 });
