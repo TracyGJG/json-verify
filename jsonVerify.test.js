@@ -75,7 +75,7 @@ describe('JSON verify', () => {
 			}
 		);
 	});
-	describe('Complex combination', () => {
+	describe.only('Complex combination', () => {
 		test('Complete simple array', () => {
 			const testJson = ['test', true, 42, null, {}, []];
 			const json = JSON.stringify(testJson);
@@ -119,7 +119,7 @@ describe('JSON verify', () => {
 			const resultObject = JSON.parse(results.report);
 			expect(resultObject).toEqual(testJson);
 		});
-		test('Complete object in  array', () => {
+		test('Complete object in array', () => {
 			const testJson = [
 				{
 					propStr: 'test',
@@ -142,6 +142,16 @@ describe('JSON verify', () => {
 			const results = jsonVerify(json);
 			const resultObject = JSON.parse(results.report);
 			expect(resultObject).toEqual(testJson);
+		});
+		test.only('Array with duplicate properties in same object', () => {
+			const json = '[ { "prop": true, "prop": false } ]';
+			const results = jsonVerify(json);
+			expect(results.error).toBe('Duplicate property "prop" encountered');
+		});
+		test('Array with duplicate properties in differnt objects', () => {
+			const json = '[ { "prop": true}, {"prop": false } ]';
+			const results = jsonVerify(json);
+			expect(results.error).toBe('');
 		});
 	});
 });

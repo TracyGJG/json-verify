@@ -120,7 +120,7 @@ export const tokenValidators = {
 	OBJECT_4: { validTokens: ['String'], action: RESET_STACK },
 };
 
-export function validateToken({ token }, tokenStack, state) {
+export function validateToken({ token, value }, tokenStack, state) {
 	if (token === 'Error') return;
 
 	const tokenIndex = tokenStack.length
@@ -128,6 +128,17 @@ export function validateToken({ token }, tokenStack, state) {
 		: 'TOP_LEVEL';
 
 	if (tokenValidators[tokenIndex].validTokens.includes(token)) {
+		if (
+			token === 'String' &&
+			!(tokenStack[0].step % 4) &&
+			tokenStack[0].context === 'OBJECT'
+		) {
+			if (tokenStack[0].properties.includes(value)) {
+				state.error = `Duplicate property ${value} encountered`;
+			} else {
+				tokenStack[0].properties.push(value);
+			}
+		}
 		tokenValidators[tokenIndex].action(token, tokenStack);
 	} else {
 		state.error = `Unexpected ${token} encountered`;
