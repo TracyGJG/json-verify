@@ -3,7 +3,8 @@
         "description": "Error",
         "input": {
             "tokenValue": {
-                "token": "Error"
+                "token": "Error",
+                "value": "Errr"
             },
             "tokenStack": [
                 {
@@ -23,7 +24,7 @@
                 }
             ],
             "state": {
-                "error": "An error has occured"
+                "error": "Errr"
             }
         }
     },

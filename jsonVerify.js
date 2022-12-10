@@ -27,7 +27,7 @@ function createJsonTokeniser(jsonTokenPatterns) {
 		const tokenMatches = jsonString.remainder.match(jsonRegExpObject)
 			?.groups || {
 			Error: 'Unrecognised content encountered',
-			remainder: jsonString,
+			remainder: jsonString.remainder,
 		};
 		const tokenValue = Object.entries(tokenMatches).reduce(extractTokens, {});
 		jsonString.remainder = tokenMatches.remainder;
@@ -121,7 +121,10 @@ export const tokenValidators = {
 };
 
 export function validateToken({ token, value }, tokenStack, state) {
-	if (token === 'Error') return;
+	if (token === 'Error') {
+		state.error = value;
+		return;
+	}
 
 	const tokenIndex = tokenStack.length
 		? `${tokenStack[0].context}_${tokenStack[0].step}`
@@ -150,24 +153,38 @@ export function validateToken({ token, value }, tokenStack, state) {
 export function updateReport(tokenValue, tokenStack, jsonState, indent) {
 	if (jsonState.error) return;
 
+	const isComma = tokenValue.token === 'Comma';
 	const isColon = tokenValue.token === 'Colon';
-	const colonSpace = indent(+isColon);
-
+	const isOpenner = OPENERS.includes(tokenValue.token);
+	const isClosure = CLOSURES.includes(tokenValue.token);
+	const isProperty =
+		(tokenStack.length > 1 && tokenStack[1].step === 3 && isOpenner) ||
+		(tokenStack.length > 0 &&
+			tokenStack[0].step === 3 &&
+			!(isOpenner || isClosure));
 	const isEmptyContext = tokenStack[0]?.step === -1;
-	const emptySpace = indent(+isEmptyContext);
 
-	const isFirstPrimitive = tokenStack[0]?.step === 1;
-	const isContextTerminated = tokenStack[0]?.step < -1;
+	const isPrimaryOpenner = isOpenner && tokenStack.length === 1;
+	const outdent = (isOpenner || isClosure) && !isEmptyContext;
 
 	const newLine =
-		isFirstPrimitive || (isContextTerminated && !isEmptyContext) ? '\n' : '';
-	const indentText = indent(
-		+!!newLine * tokenStack.length - +isContextTerminated
-	);
+		isComma ||
+		isColon ||
+		isEmptyContext ||
+		isPrimaryOpenner ||
+		isProperty ||
+		!tokenStack.length
+			? ''
+			: '\n';
+	const indentText = indent(+!!newLine * (tokenStack.length - +outdent));
+	const emptySpace = indent(+isEmptyContext);
+	const colonSpace = indent(+isColon);
 
 	jsonState.report += `${newLine}${indentText}${emptySpace}${tokenValue.value}${colonSpace}`;
 
-	if (tokenStack[0]?.step < 0) tokenStack.shift();
+	if (tokenStack[0]?.step < 0) {
+		tokenStack.shift();
+	}
 	if (!tokenStack.length && jsonState.remainder) {
 		jsonState.error = `Data remaining after complete JSON block.`;
 		return;

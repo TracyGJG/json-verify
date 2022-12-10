@@ -126,7 +126,7 @@
             "  "
         ],
         "output": {
-            "report": "[{  }\n]",
+            "report": "[\n  {  }\n]",
             "remainder": "",
             "error": ""
         }
@@ -138,7 +138,7 @@
             "  "
         ],
         "output": {
-            "report": "[{\n    \"test\":  null\n  }\n]",
+            "report": "[\n  {\n    \"test\":  null\n  }\n]",
             "remainder": "",
             "error": ""
         }
@@ -150,7 +150,7 @@
             "  "
         ],
         "output": {
-            "report": "[[  ]\n]",
+            "report": "[\n  [  ]\n]",
             "remainder": "",
             "error": ""
         }
@@ -162,7 +162,7 @@
             "  "
         ],
         "output": {
-            "report": "[[\n    42\n  ]\n]",
+            "report": "[\n  [\n    42\n  ]\n]",
             "remainder": "",
             "error": ""
         }

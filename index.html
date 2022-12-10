@@ -6,14 +6,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Verify</title>
+    <style>
+        :root {
+            --text-colour: #000099;
+        }
+
+        body {
+            background-color: var(--text-colour);
+        }
+
+        body>*,
+        a,
+        a:visited {
+            color: #FFFFFF;
+        }
+
+        .error {
+            color: #FF0000;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        main>*>div {
+            width: 100%;
+        }
+
+        #txaInput {
+            width: 100%;
+            color: var(--text-colour);
+        }
+
+        div>div {
+            background-color: #FFFFFF;
+            color: #000000;
+            margin-bottom: 1rem;
+        }
+
+        .btnContainer {
+            text-align: center;
+        }
+
+        #divReport {
+            white-space: pre;
+        }
+
+        button {
+            margin: auto;
+            padding: 0.5rem 1rem;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>[}x JSON Verify</h1>
+    <h1>{:,]<span class="error">x</span> JSON Verify</h1>
     <h2>Demonstrator of the JSON verification module. This UI provides an interactive test environment to exercise JSON
         data entered by the user.</h2>
     <main>
-
+        <textarea id="txaInput" rows="24"
+            placeholder="Enter JSON here"> [ null, true, [{"test3": null, "test4": true}], { "test1": {}, "test2": []}, 42, "test"] </textarea>
+        <div>
+            <div id="divReport"></div>
+            <div id="divError" class="error" placeholder="Error"></div>
+            <div id="divRemainder" placeholder="Remainder"></div>
+        </div>
+        <div class="btnContainer">
+            <button id="btnVerify">Verify JSON</button>
+        </div>
     </main>
     <footer>
         The source code of JSON-verify can be found on <a
@@ -23,6 +86,21 @@
             <img src="https://api.netlify.com/api/v1/badges/0a4fd344-9f2e-49d7-8685-a54311221f43/deploy-status">
         </a>
     </footer>
+
+    <script type="module">
+        import jsonVerify from './jsonVerify.js';
+
+        document.querySelector('#btnVerify').addEventListener('click', () => {
+            const txaInput = document.querySelector('#txaInput');
+            const divReport = document.querySelector('#divReport');
+            const divError = document.querySelector('#divError');
+            const divRemainder = document.querySelector('#divRemainder');
+            const result = jsonVerify(txaInput.value);
+            divReport.textContent = result.report;
+            divError.textContent = result.error;
+            divRemainder.textContent = result.remainder;
+        });
+    </script>
 </body>
 
 </html>

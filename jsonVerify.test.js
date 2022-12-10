@@ -153,5 +153,33 @@ describe('JSON verify', () => {
 			const results = jsonVerify(json);
 			expect(results.error).toBe('');
 		});
+		test('Simple Ad-hoc', () => {
+			const json = ' "forty-two" ';
+			const results = jsonVerify(json);
+			expect(results.error).toBe('');
+			expect(results.report).toBe('"forty-two"');
+		});
+		test('Complex Ad-hoc', () => {
+			const json =
+				'[ null, true, [{"test3": null, "test4": true}], { "test1": {}, "test2": []}, 42, "test"]';
+			const results = jsonVerify(json);
+			expect(results.error).toBe('');
+			expect(results.report).toBe(`[
+	null,
+	true,
+	[
+		{
+			"test3":	null,
+			"test4":	true
+		}
+	],
+	{
+		"test1":	{	},
+		"test2":	[	]
+	},
+	42,
+	"test"
+]`);
+		});
 	});
 });
