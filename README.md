@@ -48,10 +48,64 @@ The inspiration for the project was the observation there as no standard or comm
 1. Confirm the MIT licence the project is released under is suiteable.
 1. The project would have to take ownership of (fork) the project (preferably feeding back improvements) as I cannot guarantee a prompt response to issues.
 
-If had been developing this for production I would probably have used TypeScript but otherwise I would have kept everything else the same.
+If I had been developing this for production I would probably have used TypeScript and would only expose the default export, but I would have kept everything else the same.
 
 ## Future contributions
 I would welcome constructive comments on the project (via the repo [issues page](https://github.com/TracyGJG/json-verify/issues)) and pull requests containing suggested changes, but I reserve the right the deal with them as I see fit. I ask any contributors to read the following section on "How the module works" for the technical details.
 
+### How the module works
 
+The module breaks down to three steps repeated until the input is fully verified or a fault is detected.
+1. Parse the input for a recognised TOKEN.
+1. Confirm the TOKEN is valid at the location it was discovered in the input 'stream'.
+1. Build a report from the valid tokens.
+
+In addition the module genertes;
+* a data structure in which to maintain the current state of processing (jsonState),
+* a function for producing the indents in the outpur report,
+* the function for identifying the tokens that make up a valid JSON string.
+
+#### The Process
+1. Generate the jsonState object
+2. Generate the indent function
+3. Prepare a token stack (empty array) for validation
+4. While there is data to process and no error detected:
+
+    - Extract the next token and value from the front of the json string, retaining the 'remainder' of the string.
+    - Confirm the token is valid in the context of current processing of the JSON string.
+    - Update the report using the value, context (token stack) and indent function. 
+
+#### Extracting the token/value
+The official <a href="https://www.json.org/json-en.html">JSON</a> website clearly illustrates the syntactical structure supported by the JSON data format. There are six 'train track' diagrams showing how key elements of the structure are composed including 'whitespace'. However, the official <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-404/">ECMA-404 specification</a> also defines whitesapce and states it can be found in between all other tokens and can be ignored.
+
+The other five elements can be further decomposed into just ten tokens that can be defined using Regular Expressions. At the top level, a JSON data structure can be a primitive value, an array or an object; as defined below.
+
+A primitive value is defiend as 'null', Boolean values 'true' or 'false', a number in a variety of forms, or string with all of its complexity. See the JSON website for specific details.
+
+An array is a collection of zero, one or many primitive values, arrays and/or obejcts. They are delimited by square brakets '[' and ']' with each item in the array separted with a comma ','. Again as illistrated on the JSON website.
+
+Objects are another form of collection but each element (primitive, array or object) is assigned a key, the combination known as a Property. So, an object can contain zero, one or more Properties, separated with a comma. A Property comprises of a key (that has to be a string) followed by a colon separator and ending with a value.
+
+* Primitive:
+    - null, 
+    - true, false, _Boolean_
+    - _Number_
+    - _String_
+* Array: 
+    - open array _[_,
+    - value(s),
+    - comma separator _,_,
+    - close array _]_
+* Object:
+    - open object _{_,
+    - properties:
+        - key, 
+        - colon separator _:_,
+        - value,
+    - comma separator _,_,
+    - close object _}_
+
+#### Validating the token in context (token stack)
+
+#### Building the report
 
