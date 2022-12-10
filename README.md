@@ -45,10 +45,13 @@ Very nearly. I have applied the same coding and testing conventions I mandate in
 
 The inspiration for the project was the observation there as no standard or commercially available product to meet this somewhat niche requirement. If my prject were to utilise this code I would insist on the following.
 1. The code needs to be reviewed and revised accordingly.
+1. Confirm the MIT licence the project is released under is suiteable.
 1. The project would have to take ownership of (fork) the project (preferably feeding back improvements) as I cannot guarantee a prompt response to issues.
 
+If had been developing this for production I would probably have used TypeScript but otherwise I would have kept everything else the same.
+
 ## Future contributions
-I would welcome constructive comments on the project (via the repo [issues page](https://github.com/TracyGJG/json-verify/issues)) and pull requests containing changes but resever the right the deal with them as I see fit.
+I would welcome constructive comments on the project (via the repo [issues page](https://github.com/TracyGJG/json-verify/issues)) and pull requests containing suggested changes, but I reserve the right the deal with them as I see fit. I ask any contributors to read the following section on "How the module works" for the technical details.
 
 
 
