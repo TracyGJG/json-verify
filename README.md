@@ -37,6 +37,18 @@ In response the function returns an object containing the following properties:
 
 The 'verify' function could be regarded as a candidate function of the JSON namespace.
 
+### Is it production ready
+Very nearly. I have applied the same coding and testing conventions I mandate in my professional role as a software engineer. However,
+1. This project started out as a personal project, thus the use of vanilla JS instead of TypeScript.
+1. I am the only developer on this project so it has not received the code review I would expect in my professional life.
+1. The module has been quite extensively unit tested (there will always be edge cases I missed).
+
+The inspiration for the project was the observation there as no standard or commercially available product to meet this somewhat niche requirement. If my prject were to utilise this code I would insist on the following.
+1. The code needs to be reviewed and revised accordingly.
+1. The project would have to take ownership of (fork) the project (preferably feeding back improvements) as I cannot guarantee a prompt response to issues.
+
+## Future contributions
+I would welcome constructive comments on the project (via the repo [issues page](https://github.com/TracyGJG/json-verify/issues)) and pull requests containing changes but resever the right the deal with them as I see fit.
 
 
 
