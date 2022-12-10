@@ -26,14 +26,14 @@ The purpose of 'verify' is to:
 
 The first argument is mandatory and should contain a text string that is a candidate JS object to be confirmed as well formed JSON.
 
-The optional second argument is either a string of number.
+The optional second argument is either a string or number.
 Given a string, it will be used as the indent to present the JSON output in a readable structure. 
-If a number is supplied, that number of spaces will be used as the indent string 
+If a number is supplied, that number of spaces will be used as the indent string.
 
 In response the function returns an object containing the following properties:
 * error: a string containing an error message should an issue have been detected, empty string if it passes
-* report: a string containing the initial section of the JSON data that conforms with the specifciation, up to the point a fault was detected
-* remainder: a string containing the section of the JSON data from the point of failure to the end of the JSON data 
+* report: a string containing the initial section of the JSON data that conforms with the specifciation, up to the point a fault was detected. If no fault is detected this property will contain a formatted version of the input dataset, ready for validation/use.
+* remainder: a string containing the section of the JSON data from the point of failure to the end of the JSON data. If the dataset is verified as conformant, this property will be empty.
 
 The 'verify' function could be regarded as a candidate function of the JSON namespace.
 
