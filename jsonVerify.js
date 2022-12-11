@@ -171,14 +171,14 @@ export function validateToken({ token, value }, tokenStack, state) {
 			!(tokenStack[0].step % 4)
 		) {
 			if (tokenStack[0].properties.includes(value)) {
-				state.error = `Duplicate property ${value} encountered`;
+				state.error = `Duplicate property ${value}\ encountered`;
 			} else {
 				tokenStack[0].properties.push(value);
 			}
 		}
 		tokenValidators[tokenIndex].action(token, tokenStack);
 	} else {
-		state.error = `Unexpected ${token} encountered`;
+		state.error = `Unexpected ${token}\ encountered`;
 	}
 }
 //#endregion
