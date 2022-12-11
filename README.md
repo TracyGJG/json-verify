@@ -35,6 +35,18 @@ In response the function returns an object containing the following properties:
 * report: a string containing the initial section of the JSON data that conforms with the specifciation, up to the point a fault was detected. If no fault is detected this property will contain a formatted version of the input dataset, ready for validation/use.
 * remainder: a string containing the section of the JSON data from the point of failure to the end of the JSON data. If the dataset is verified as conformant, this property will be empty.
 
+The process of token validation (described below) also detects objects containing properties with the same name that would cause an error when (JSON.)parse(d) in the form of data loss.
+
+e.g. The following JSON string will lose data when parsed
+
+`{"test": true, "test": 42}`
+
+yielding the following object 
+
+`{ test: 42 }`
+
+but, importantly, will not report the error.
+
 The 'verify' function could be regarded as a candidate function of the JSON namespace.
 
 ### Is it production ready
@@ -76,6 +88,7 @@ In addition the module genertes;
     - Update the report using the value, context (token stack) and indent function. 
 
 #### Extracting the token/value
+
 The official <a href="https://www.json.org/json-en.html">JSON</a> website clearly illustrates the syntactical structure supported by the JSON data format. There are six 'train track' diagrams showing how key elements of the structure are composed including 'whitespace'. However, the official <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-404/">ECMA-404 specification</a> also defines whitesapce and states it can be found in between all other tokens and can be ignored.
 
 The other five elements can be further decomposed into just ten tokens that can be defined using Regular Expressions. At the top level, a JSON data structure can be a primitive value, an array or an object; as defined below.
@@ -99,7 +112,7 @@ Objects are another form of collection but each element (primitive, array or obj
 * Object:
     - open object _{_,
     - properties:
-        - key, 
+        - key (_String_), 
         - colon separator _:_,
         - value,
     - comma separator _,_,
@@ -107,5 +120,19 @@ Objects are another form of collection but each element (primitive, array or obj
 
 #### Validating the token in context (token stack)
 
+At any given point in the processing of a JSON string the next valid token is of a restricted (predefined) set as stipulated in the specificiation. For example, after an opening curly brace _{_ we only exepct the following:
+* A closing brace _}_ for an empty object
+* A _String_ for the name of a property
+
+Everything else is unexpected and will result in an error being reported.
+This stage of the process contains all the rules required to ensure a "well formed" JavaScript object can be produced from the input or an error is reported at the location it is detected. When an error is found processing of the JSON string is terminated with the redisual text provided in the `remainder` property.
+
+As stated earlier, validation also includes ensuring potential data loss through the provision of duplicate properties is guarded against.
+
 #### Building the report
 
+The context and type of token will determine how and where the value is to be presented in the output report, which mimics a `JSON.stringify` output.
+
+Some tokens such as colon and comma need to remain on the same line as the preceeding value. Closing brackets, curly and square, usually appear on a new line, unless the object/array they represent is empty, then they appear on the same line as the openning bracket but with an indent between them.
+
+All the rules for presentation are captured in the `updateReport` function called to complete the processing of a token.
