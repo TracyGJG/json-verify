@@ -64,6 +64,9 @@ The inspiration for the project was the observation there as no standard or comm
 
 If I had been developing this for production I would probably have used TypeScript and would only expose the default export, but I would have kept everything else the same.
 
+### Dependencies
+The library itself has no 3rd-party dependencies required for execution.
+
 ## Future contributions
 I would welcome constructive comments on the project (via the repo [issues page](https://github.com/TracyGJG/json-verify/issues)) and pull requests containing suggested changes, but I reserve the right the deal with them as I see fit. I ask any contributors to read the following section on "How the module works" for the technical details.
 
