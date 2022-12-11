@@ -1,6 +1,7 @@
-# {:,]<span class="error">x</span> JSON verify
+# {:,]<span style="color:red">x</span>
+# JSON verify
 
-A utility to verfiy a string is truely in JavaScript Object Notation [JSON](https://www.json.org/json-en.html) and compliant with the [ECMA-404](https://www.ecma-international.org/wp-content/uploads/ECMA-404_1st_edition_october_2013.pdf) standard.
+A utility to verfiy a string is truely in JavaScript Object Notation ([JSON](https://www.json.org/json-en.html)) and compliant with the [ECMA-404](https://www.ecma-international.org/wp-content/uploads/ECMA-404_1st_edition_october_2013.pdf) standard.
 
 ## Motivation
 JavaScript is already equipped with a very capable JSON parser. However, the information provided when an invalid dataset is presented has several issues.
