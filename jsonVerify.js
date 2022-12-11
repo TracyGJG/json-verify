@@ -1,4 +1,9 @@
 //#region Preparation functions
+/**
+ * A function to generate and initilise the JSON state object
+ * @param {String} sourceData is the initial input string to be verified.
+ * @returns An object conatining the JSON State to be used during verification.
+ */
 export function createJsonState(sourceData) {
 	return {
 		report: '',
@@ -7,6 +12,11 @@ export function createJsonState(sourceData) {
 	};
 }
 
+/**
+ * A Construtor function that prepares the default indent fragment and returns a function to apply it.
+ * @param {string|number} indent the string frangent or the number of space characters to be used as the indent for the report.
+ * @returns The indent function that, given a number of indents, produces the text to be presented.
+ */
 export function createIndentFunction(indent = '\t') {
 	const indentText = `${indent}`;
 	const indentSpaces = +indentText > -1 ? ' '.repeat(+indentText) : '\t';
@@ -16,6 +26,11 @@ export function createIndentFunction(indent = '\t') {
 //#endregion
 
 //#region create jsonTokeniser
+/**
+ * Constructor function that compbines the token patterns into a single RegExp and supplies a function to parse the input string.
+ * @param {object} jsonTokenPatterns contains a list of properties, one for each leagle token, along with the Regular Expression pattern used to detect it.
+ * @returns The JSON tokenizer used to parse the input string
+ */
 function createJsonTokeniser(jsonTokenPatterns) {
 	const jsonRegExpObject = new RegExp(
 		`^(${Object.entries(jsonTokenPatterns)
@@ -43,6 +58,9 @@ function createJsonTokeniser(jsonTokenPatterns) {
 	}
 }
 
+/**
+ * The generated JSON Tokenizer supplied with Regular Expression patterns for each leagle token.
+ */
 export const jsonTokenizer = createJsonTokeniser({
 	Null: 'null',
 	Boolean: '(false|true)',
@@ -58,6 +76,9 @@ export const jsonTokenizer = createJsonTokeniser({
 //#endregion
 
 //#region validateToken
+/**
+ * A collection of composite values and utility functions.
+ */
 const OPENERS = ['Array opening', 'Object opening'];
 const CLOSURES = ['Array closure', 'Object closure'];
 const PRIMITIVES = ['Null', 'Boolean', 'Number', 'String'];
@@ -83,6 +104,9 @@ const CLOSE_CONTEXT = (token, stack) => {
 	PUSH_STACK(token, stack);
 };
 
+/**
+ * The list of token validation rules and actions to be performed when valid.
+ */
 export const tokenValidators = {
 	TOP_LEVEL: { validTokens: [...PRIMITIVES, ...OPENERS], action: PUSH_STACK },
 	ARRAY_0: {
@@ -120,6 +144,15 @@ export const tokenValidators = {
 	OBJECT_4: { validTokens: ['String'], action: RESET_STACK },
 };
 
+/**
+ * ValidateToken applies a set of predefined rules to ensure the tokens appear is a valid sequence as prescibed in the specification.
+ * 		It also checks to guard against data loss by keeping track of the property names used in an object to protect against duplicates.
+ * @param {object} param0 contains two string arguments, the token and its value.
+ * @param {array} tokenStack is an array that retains the current context of compound tokens such as arrays and objects.
+ * @param {object} jsonState contains the current state of processing.
+ * 		It is an object that holds the report to date, an error message if one has been detected and the remainder of the sourceData.
+ * @returns void
+ */
 export function validateToken({ token, value }, tokenStack, state) {
 	if (token === 'Error') {
 		state.error = value;
@@ -150,6 +183,15 @@ export function validateToken({ token, value }, tokenStack, state) {
 }
 //#endregion
 
+/**
+ * The Update Report function updates the `report` property of the `jsonState` object as long as no error has been detected.
+ * @param {object} tokenValue is a combination of strings, the token and the value of the token.
+ * @param {array} tokenStack is an array that retains the current context of compound tokens such as arrays and objects.
+ * @param {object} jsonState contains the current state of processing.
+ * 		It is an object that holds the report to date, an error message if one has been detected and the remainder of the sourceData.
+ * @param {string} indent is a fragment of text to be used to indent values for presentation.
+ * @returns void
+ */
 export function updateReport(tokenValue, tokenStack, jsonState, indent) {
 	if (jsonState.error) return;
 
@@ -196,6 +238,16 @@ export function updateReport(tokenValue, tokenStack, jsonState, indent) {
 	}
 }
 
+/**
+ * The primary (default) function of the module processes the JSON string nd produces a report.
+ * @param {string} sourceData is the JSON string to be verified and confirmed as 'well formed' and fit for parsing.
+ * @param {string|number} indentText is an optional parameter defaulted to a tab character.
+ * 		It can supply a number of spaces to be used as an indent (min 0) or a fragment of text to be used.
+ * @returns {object} A report containing three properties
+ * 	- {string} - report: the formatted output, akin to the JSON.stringify operation
+ * 	- {string} - error: an error message for the first detected issue
+ * 	- {string} - remainder: any text remaining at the end of processing
+ */
 export default function jsonVerify(sourceData, indentText) {
 	const jsonState = createJsonState(sourceData);
 	const indent = createIndentFunction(indentText);

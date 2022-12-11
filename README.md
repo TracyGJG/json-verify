@@ -51,9 +51,11 @@ The 'verify' function could be regarded as a candidate function of the JSON name
 
 ### Is it production ready
 Very nearly. I have applied the same coding and testing conventions I mandate in my professional role as a software engineer. However,
-1. This project started out as a personal project, thus the use of vanilla JS instead of TypeScript.
+1. This project started out as a personal project, thus the use of vanilla JS instead of TypeScript.* 
 1. I am the only developer on this project so it has not received the code review I would expect in my professional life.
 1. The module has been quite extensively unit tested (there will always be edge cases I missed).
+
+* TS may not have been used but JSDoc comments has been applied to each function to provide type hints fro parameters.
 
 The inspiration for the project was the observation there as no standard or commercially available product to meet this somewhat niche requirement. If my prject were to utilise this code I would insist on the following.
 1. The code needs to be reviewed and revised accordingly.
