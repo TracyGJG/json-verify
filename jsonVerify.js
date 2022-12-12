@@ -5,9 +5,13 @@
  * @returns An object conatining the JSON State to be used during verification.
  */
 export function createJsonState(sourceData) {
+	const unexpectedObject =
+		sourceData === '[object Object]' ? 'Unexpected Object encountered' : '';
+	const unexpectedUndefined =
+		sourceData === 'undefined' ? 'Unexpected undefined value encountered' : '';
 	return {
 		report: '',
-		error: '',
+		error: `${unexpectedObject}${unexpectedUndefined}`,
 		remainder: sourceData.trim(),
 	};
 }
@@ -249,7 +253,7 @@ export function updateReport(tokenValue, tokenStack, jsonState, indent) {
  * 	- {string} - remainder: any text remaining at the end of processing
  */
 export default function jsonVerify(sourceData, indentText) {
-	const jsonState = createJsonState(sourceData);
+	const jsonState = createJsonState(`${sourceData}`);
 	const indent = createIndentFunction(indentText);
 	const tokenStack = [];
 

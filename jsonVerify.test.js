@@ -75,91 +75,63 @@ describe('JSON verify', () => {
 			}
 		);
 	});
-	describe('Complex combination', () => {
-		test('Complete simple array', () => {
-			const testJson = ['test', true, 42, null, {}, []];
-			const json = JSON.stringify(testJson);
-			const results = jsonVerify(json);
-			const resultObject = JSON.parse(results.report);
-			expect(resultObject).toEqual(testJson);
+	describe('Ad-hoc combinations', () => {
+		test('Empty (undefined)', () => {
+			const results = jsonVerify();
+			expect(results).toBeDefined();
+			expect(results.error).toBe('Unexpected undefined value encountered');
+			expect(results.report).toBe('');
+			expect(results.remainder).toBe('undefined');
 		});
-		test('Complete simple object', () => {
-			const testJson = {
-				propStr: 'test',
-				propBool: true,
-				propNum: 42,
-				propNull: null,
-				propObj: {},
-				propArr: [],
-			};
-			const json = JSON.stringify(testJson);
-			const results = jsonVerify(json);
-			const resultObject = JSON.parse(results.report);
-			expect(resultObject).toEqual(testJson);
-		});
-		test('Complete nested array', () => {
-			const testJson = [['test', true, 42, null, {}]];
-			const json = JSON.stringify(testJson);
-			const results = jsonVerify(json);
-			const resultObject = JSON.parse(results.report);
-			expect(resultObject).toEqual(testJson);
-		});
-		test('Complete nested object', () => {
-			const testJson = {
-				propObj: {
-					propStr: 'test',
-					propBool: true,
-					propNum: 42,
-					propNull: null,
-					propArr: [],
-				},
-			};
-			const json = JSON.stringify(testJson);
-			const results = jsonVerify(json);
-			const resultObject = JSON.parse(results.report);
-			expect(resultObject).toEqual(testJson);
-		});
-		test('Complete object in array', () => {
-			const testJson = [
-				{
-					propStr: 'test',
-					propBool: true,
-					propNum: 42,
-					propNull: null,
-					propArr: [],
-				},
-			];
-			const json = JSON.stringify(testJson);
-			const results = jsonVerify(json);
-			const resultObject = JSON.parse(results.report);
-			expect(resultObject).toEqual(testJson);
-		});
-		test('Complete array in object', () => {
-			const testJson = {
-				propObj: ['test', true, 42, null, {}],
-			};
-			const json = JSON.stringify(testJson);
-			const results = jsonVerify(json);
-			const resultObject = JSON.parse(results.report);
-			expect(resultObject).toEqual(testJson);
-		});
-		test('Array with duplicate properties in same object', () => {
-			const json = '[ { "prop": true, "prop": false } ]';
-			const results = jsonVerify(json);
-			expect(results.error).toBe('Duplicate property "prop" encountered');
-		});
-		test('Array with duplicate properties in differnt objects', () => {
-			const json = '[ { "prop": true}, {"prop": false } ]';
-			const results = jsonVerify(json);
+		test('Empty (null)', () => {
+			const results = jsonVerify(null);
+			expect(results).toBeDefined();
 			expect(results.error).toBe('');
+			expect(results.report).toBe('null');
+			expect(results.remainder).toBe('');
 		});
-		test('Simple Ad-hoc', () => {
+		test('Empty (string)', () => {
+			const results = jsonVerify('');
+			expect(results).toBeDefined();
+			expect(results.error).toBe('');
+			expect(results.report).toBe('');
+			expect(results.remainder).toBe('');
+		});
+		test('No-string (Boolean)', () => {
+			const results = jsonVerify(true);
+			expect(results).toBeDefined();
+			expect(results.error).toBe('');
+			expect(results.report).toBe('true');
+			expect(results.remainder).toBe('');
+		});
+		test('No-string (Number)', () => {
+			const results = jsonVerify(42);
+			expect(results).toBeDefined();
+			expect(results.error).toBe('');
+			expect(results.report).toBe('42');
+			expect(results.remainder).toBe('');
+		});
+		test('No-string (Array)', () => {
+			const results = jsonVerify([]);
+			expect(results).toBeDefined();
+			expect(results.error).toBe('');
+			expect(results.report).toBe('');
+			expect(results.remainder).toBe('');
+		});
+		test('No-string (Object)', () => {
+			const results = jsonVerify({});
+			expect(results).toBeDefined();
+			expect(results.error).toBe('Unexpected Object encountered');
+			expect(results.report).toBe('');
+			expect(results.remainder).toBe('[object Object]');
+		});
+		test('Simple string', () => {
 			const json = ' "forty-two" ';
 			const results = jsonVerify(json);
 			expect(results.error).toBe('');
 			expect(results.report).toBe('"forty-two"');
 		});
-		test('Complex Ad-hoc', () => {
+		test('Complex array', () => {
 			const json =
 				'[ null, true, [{"test3": null, "test4": true}], { "test1": {}, "test2": []}, 42, "test"]';
 			const results = jsonVerify(json);
@@ -180,6 +152,85 @@ describe('JSON verify', () => {
 	42,
 	"test"
 ]`);
+		});
+	});
+	describe('Complete combinations', () => {
+		test('Simple array', () => {
+			const testJson = ['test', true, 42, null, {}, []];
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Simple object', () => {
+			const testJson = {
+				propStr: 'test',
+				propBool: true,
+				propNum: 42,
+				propNull: null,
+				propObj: {},
+				propArr: [],
+			};
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Nested array', () => {
+			const testJson = [['test', true, 42, null, {}]];
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Nested object', () => {
+			const testJson = {
+				propObj: {
+					propStr: 'test',
+					propBool: true,
+					propNum: 42,
+					propNull: null,
+					propArr: [],
+				},
+			};
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Object in array', () => {
+			const testJson = [
+				{
+					propStr: 'test',
+					propBool: true,
+					propNum: 42,
+					propNull: null,
+					propArr: [],
+				},
+			];
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Array in object', () => {
+			const testJson = {
+				propObj: ['test', true, 42, null, {}],
+			};
+			const json = JSON.stringify(testJson);
+			const results = jsonVerify(json);
+			const resultObject = JSON.parse(results.report);
+			expect(resultObject).toEqual(testJson);
+		});
+		test('Array with duplicate properties in same object', () => {
+			const json = '[ { "prop": true, "prop": false } ]';
+			const results = jsonVerify(json);
+			expect(results.error).toBe('Duplicate property "prop" encountered');
+		});
+		test('Array with duplicate properties in differnt objects', () => {
+			const json = '[ { "prop": true}, {"prop": false } ]';
+			const results = jsonVerify(json);
+			expect(results.error).toBe('');
 		});
 	});
 });
