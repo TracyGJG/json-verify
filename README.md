@@ -16,7 +16,7 @@ So what is the difference between verification and validation. To answer this we
 
 A dataset cannot be valid if it is not well formed so verification needs to be confirmed before validation. 
 XML has a simple syntax but at a cost of a slightly more verbose notation. JSON is less verbose but has a slightly more complicated syntax. 
-I might be mistaken but I am not aware of a standardised form of JSON schema. There are tools available to define a JSON schema and validation a data string but they are independent solutions to a common problem. If you know different, please let me know.
+I might be mistaken but I am not aware of a standardised form of JSON schema. There are tools available to define a JSON schema and validation a data string but they are independent solutions to a common problem. The nearest I have found to a standard for JSON validation is provided by the [JSON Schema](https://json-schema.org/) project but its status appears to be immature and unofficial. If you know different, please let me know.
 
 ## JSON Verification
 JSON verify is an ES Module that exposes a default function of 'verify' that expects to be provided with a single string argument and an optional indent argument.
@@ -106,23 +106,23 @@ An array is a collection of zero, one or many primitive values, arrays and/or ob
 Objects are another form of collection but each element (primitive, array or object) is assigned a key, the combination known as a Property. So, an object can contain zero, one or more Properties, separated with a comma. A Property comprises of a key (that has to be a string) followed by a colon separator and ending with a value.
 
 * Primitive:
-    - null, 
+    - null
     - true, false, _Boolean_
     - _Number_
     - _String_
 * Array: 
-    - open array _[_,
-    - value(s),
-    - comma separator _,_,
-    - close array _]_
+    - open array ``[``
+    - value(s)
+    - comma separator ``,``
+    - close array ``]``
 * Object:
-    - open object _{_,
+    - open object ``{``
     - properties:
-        - key (_String_), 
-        - colon separator _:_,
-        - value,
-    - comma separator _,_,
-    - close object _}_
+        - key (_String_)
+        - colon separator ``:``
+        - value
+    - comma separator ``,``
+    - close object ``}``
 
 #### Validating the token in context (token stack)
 
